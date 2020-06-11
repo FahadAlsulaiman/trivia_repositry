@@ -73,27 +73,176 @@ REVIEW_COMMENT
 ```
 This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code.
 
+```
+
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions/<int:page>'
+DELETE '/questions/<int:id>'
+POST '/questions/addQuestion'
+POST '/questions'
+GET '/categories/<int:id>/questions'
+POST '/quizzes'
 
 GET '/categories'
+
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs.
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
+  {'1' : "Science",
+  '2' : "Art",
+  '3' : "Geography",
+  '4' : "History",
+  '5' : "Entertainment",
+  '6' : "Sports"}
 
-    export FLASK_APP=flaskr
-    export FLASK_ENV=development
-      flask run
-```
+GET '/questions/<int:page>'
+
+- Fetches a list of questions based on the page size
+- Request arguments : page number should be passed.
+- Retruns: A dictionary of Questions, total numebr of questions, category list and current category if exists.
+  {
+  "categories": {
+  "1": "Science",
+  "2": "Art",
+  "3": "Geography",
+  "4": "History",
+  "5": "Entertainment",
+  "6": "Sports"
+  },
+  "currentCategory": null,
+  "questions": [
+  {
+  "answer": "Escher",
+  "category": 2,
+  "difficulty": 1,
+  "id": 16,
+  "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+  },
+  {
+  "answer": "Mona Lisa",
+  "category": 2,
+  "difficulty": 3,
+  "id": 17,
+  "question": "La Giaconda is better known as what?"
+  },
+  {
+  "answer": "One",
+  "category": 2,
+  "difficulty": 4,
+  "id": 18,
+  "question": "How many paintings did Van Gogh sell in his lifetime?"
+  },
+  {
+  "answer": "Jackson Pollock",
+  "category": 2,
+  "difficulty": 2,
+  "id": 19,
+  "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+  },
+  {
+  "answer": "The Liver",
+  "category": 1,
+  "difficulty": 4,
+  "id": 20,
+  "question": "What is the heaviest organ in the human body?"
+  },
+  {
+  "answer": "Alexander Fleming",
+  "category": 1,
+  "difficulty": 3,
+  "id": 21,
+  "question": "Who discovered penicillin?"
+  },
+  {
+  "answer": "Blood",
+  "category": 1,
+  "difficulty": 4,
+  "id": 22,
+  "question": "Hematology is a branch of medicine involving the study of what?"
+  },
+  {
+  "answer": "Scarab",
+  "category": 4,
+  "difficulty": 4,
+  "id": 23,
+  "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+  },
+  {
+  "answer": "A1",
+  "category": 1,
+  "difficulty": 1,
+  "id": 50,
+  "question": "Q1"
+  },
+  {
+  "answer": "A2",
+  "category": 2,
+  "difficulty": 1,
+  "id": 51,
+  "question": "Q2"
+  }
+  ],
+  "success": true,
+  "totalQuestions": 10
+  }
+  DELETE '/questions/<int:id>'
+- Deletes a Question based on the id passed
+- request arguments : Question id
+- Returns: A flag if the deletion is successfull
+  {
+  'success': True
+  }
+
+POST '/questions/addQuestion'
+
+- Add a question to the questions list
+- request arguments : takes an object as below
+  {"question":"Q7",
+  "answer":"A7",
+  "difficulty":1,
+  "category":1
+  }
+- Returns: A flag if the questuin added successfull
+
+POST '/questions'
+
+- Fetch questions based on search term.
+- Request Arguments: Search Term
+- Return: A question,answer,category and difficulty.
+  {
+  'success': True,
+  'questions': formatted_questions,
+  'totalQuestions': totalQuestions,
+  'currentCategory': None
+  }
+
+GET '/categories/<int:id>/questions'
+
+- Fetches questions based on category
+- Requests Arguments: Category id
+- Returns: A dictionary of Questions, total numebr of questions and current category if exists.
+  {
+  'success': True,
+  'questions': formated_questionList,
+  'totalQuestions': totalQuestions,
+  'currentCategory': categoryId
+  }
+  POST '/quizzes'
+- This API is responible of fetching the questions one by one based on the questions list that will be loaded in the first call based on the category , the api will pick one question
+  randomly.
+- Request argumants: previous_questions and category
+- Returns: A question object
+  {
+  "question": {
+  "answer": "Blood",
+  "category": 1,
+  "difficulty": 4,
+  "id": 22,
+  "question": "Hematology is a branch of medicine involving the study of what?"
+  },
+  "success": true
+  }
 
 ## Testing
 

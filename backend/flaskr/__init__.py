@@ -23,9 +23,9 @@ def create_app(test_config=None):
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-    @app.route('/')
-    def root():
-        return jsonify({'message': 'works'})
+    # @app.route('/')
+    # def root():
+    #     return jsonify({'message': 'works'})
 
     @app.route('/categories', methods=['GET'])
     def categoriesList():
