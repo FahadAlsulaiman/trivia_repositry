@@ -50,29 +50,33 @@ def create_app(test_config=None):
             formated_questionList = [question.format()
                                      for question in pageList]
             totalQuestions = len(questionsList)
-            res = requests.get("http://127.0.0.1:5000/categories")
-            json_res = res.json()
-            categoriesList = json_res['categories']
+            categoriesList = Category.query.all()
             return jsonify({
                 'success': True,
                 'questions': formated_questionList,
                 'totalQuestions': totalQuestions,
-                'categories': categoriesList,
+                'categories': {category.id: category.type for category in categoriesList},
                 'currentCategory': None
             })
         except:
             abort(422)
 
-    @app.route('/questions/<int:id>', methods=['DELETE'])
+    @app.route('/questions/<int:id>/deleteQuestion', methods=['DELETE'])
     def deleteQuestion(id):
         try:
+            print(id)
+            print('test1')
             question = Question.query.filter_by(id=id).first()
-            question.delete()
-            return jsonify({
-                'success': True
-            })
-        except:
+            print(question)
+            print('test2')
+            if question:
+                question.delete()
+                return jsonify({
+                    'success': True
+                })
             abort(404)
+        except:
+            abort(422)
 
     @app.route('/questions/addQuestion', methods=['POST'])
     def addQuestion():
@@ -88,7 +92,7 @@ def create_app(test_config=None):
                 'success': True
             })
         except:
-            abort(422)
+            abort(404)
 
     @app.route('/questions', methods=['POST'])
     def searchForQeustion():
@@ -126,7 +130,7 @@ def create_app(test_config=None):
                 'currentCategory': categoryId
             })
         except:
-            abort(404)
+            abort(422)
 
     @app.route('/quizzes', methods=['POST'])
     def quizzes():

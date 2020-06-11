@@ -249,8 +249,8 @@ GET '/categories/<int:id>/questions'
 To run the tests, run
 
 ```
-dropdb trivia_test
-createdb trivia_test
-psql trivia_test < trivia.psql
+dropdb trivia_test -U postgres
+createdb trivia_test -U postgres
+psql trivia_test < trivia.psql -U postgres
 python test_flaskr.py
 ```
